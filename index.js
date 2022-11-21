@@ -2,7 +2,7 @@ import express from "express";
 import cors from 'cors';
 import 'dotenv/config'
 
-import {post} from './dbConnect.js'
+import { post } from './dbConnect.js'
 import { addPost, deletePost } from './post.js'
 
 const app = express();// create a new server instance 
@@ -16,7 +16,7 @@ app.use(express.json());// will recieve json data
 // client.connect()
 // console.log('connected to mongo')
 
-app.listen(process.env.PORT, () => console.log (`api running on port ${process.env.PORT}`));
+app.listen(process.env.PORT, () => console.log(`api running on port ${process.env.PORT}`));
 
 // app.post('/', async (req,res)=> {
 //     await post.insertOne(newPost)
@@ -24,9 +24,9 @@ app.listen(process.env.PORT, () => console.log (`api running on port ${process.e
 // })
 
 app.post('/', addPost)
-app.delete('/', deletePost)
+app.delete('/:id', deletePost)
 
-app.get('/', async (req,res) =>{
+app.get('/', async (req, res) => {
     const allPost = await post.find().toArray()
     res.send(allPost)
 })

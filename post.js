@@ -2,16 +2,23 @@
 // import { dbConnect } from "./dbConnect.js";
 // import { ObjectId } from "mongodb";
 
-import {post} from "./dbConnect.js"
+import { post } from "./dbConnect.js"
+import { ObjectId } from "mongodb"
 
-export const addPost = async (req,res) => {
+export const addPost = async (req, res) => {
     await post.insertOne(req.body)
     res.send('item was added')
 }
 
-export const deletePost = async (req,res) => {
-    await post.findOneAndDelete(req.body)
-    res.send ('item was deleted')
+export const deletePost = async (req, res) => {
+    console.log(req.params)
+    const { id } = req.params
+
+
+    console.log(new ObjectId(id))
+
+    await post.findOneAndDelete({ _id: new ObjectId(id) })
+    res.send('item was deleted')
 }
 
 
